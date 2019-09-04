@@ -3,10 +3,6 @@ import static org.junit.Assert.*;
 import java.net.URISyntaxException;
 import org.junit.Test;
 
-import com.api.util.ApiSecurity.ApiSigning;
-import com.api.util.ApiSecurity.ApiList;
-import com.api.util.ApiSecurity.ApiUtilException;
-
 /**
  * @author GDS-PDD
  *
@@ -19,7 +15,7 @@ public class BaseStringTest {
         String url = "https://example.lab:443/api/v1/rest/level1/in-in/?ap=裕廊坊%20心邻坊";
 		String expectedBaseString = "GET&https://example.lab/api/v1/rest/level1/in-in/&ap=裕廊坊 心邻坊&apex_l1_ig_app_id=example-4Swyn7qwKeO32EXdH1dKTeIQ&apex_l1_ig_nonce=1355584618267440511&apex_l1_ig_signature_method=HMACSHA256&apex_l1_ig_timestamp=1502175057654&apex_l1_ig_version=1.0";
 
-        String baseString = ApiSigner.getBaseString(
+        String baseString = ApiSigning.getBaseString(
             "Apex_L1_IG",
             "HMACSHA256",
             "example-4Swyn7qwKeO32EXdH1dKTeIQ",
@@ -42,7 +38,7 @@ public class BaseStringTest {
 		ApiList formList = new ApiList();
 		formList.add("param1", "data1");
 
-		String baseString = ApiSigner.getBaseString(
+		String baseString = ApiSigning.getBaseString(
 			"Apex_L1_IG",
 			"HMACSHA256",
 			"example-4Swyn7qwKeO32EXdH1dKTeIQ",
@@ -64,7 +60,7 @@ public class BaseStringTest {
 		String expectedMessage = "Support http and https protocol only.";
 
 		try {
-	        ApiSigner.getBaseString(
+	        ApiSigning.getBaseString(
 				"Apex_L1_IG",
 				"HMACSHA256",
 				"example-4Swyn7qwKeO32EXdH1dKTeIQ",
@@ -87,7 +83,7 @@ public class BaseStringTest {
 		String url = "://example.lab:443/api/v1/rest/level1/in-in/?ap=裕廊坊%20心邻坊";
 		
 		try {
-	        ApiSigner.getBaseString(
+	        ApiSigning.getBaseString(
 				"Apex_L1_IG",
 				"HMACSHA256",
 				"example-4Swyn7qwKeO32EXdH1dKTeIQ",

@@ -33,7 +33,7 @@ jar {
         }
     }
     manifest {
-        attributes 'Main-Class': 'ApiSigner'
+        attributes 'Main-Class': 'ApiSigning'
     }
 }
 

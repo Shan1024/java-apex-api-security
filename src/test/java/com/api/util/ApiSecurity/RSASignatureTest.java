@@ -8,10 +8,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.ArrayList;
 
-import com.api.util.ApiSecurity.ApiUtilException;
 import org.junit.Test;
-
-import com.api.util.ApiSecurity.ApiSigning;
 
 /**
  * @author GDS-PDD
@@ -34,7 +31,7 @@ public class RSASignatureTest {
 
     private static PrivateKey getPrivateKeyLocal(String keystoreFileName, String password, String alias) {
         try {
-            return ApiSigner.getPrivateKeyFromKeyStore(privateCertName, password, alias);
+            return ApiSigning.getPrivateKeyFromKeyStore(privateCertName, password, alias);
         } catch (ApiUtilException e) {
             fail("Should not throw any exception during test execution");
         }
@@ -43,7 +40,7 @@ public class RSASignatureTest {
 
     private static PublicKey getPublicKeyLocal(String publicCertificateFileName) {
         try {
-            return ApiSigner.getPublicKeyFromX509Certificate(publicCertificateFileName);
+            return ApiSigning.getPublicKeyFromX509Certificate(publicCertificateFileName);
         } catch (ApiUtilException e) {
             fail("Should not throw any exception during test execution");
         }
@@ -74,7 +71,7 @@ public class RSASignatureTest {
         String expectedMessage = "baseString must not be null or empty.";
 
         try {
-            ApiSigner.getRSASignature(null, privateKey);
+            ApiSigning.getRSASignature(null, privateKey);
 
             fail("Expecting ApiUtilException error.");
         } catch (ApiUtilException expected) {
@@ -82,7 +79,7 @@ public class RSASignatureTest {
         }
 
         try {
-            ApiSigner.getRSASignature("", privateKey);
+            ApiSigning.getRSASignature("", privateKey);
 
             fail("Expecting ApiUtilException error.");
         } catch (ApiUtilException expected) {
@@ -95,7 +92,7 @@ public class RSASignatureTest {
         String expectedMessage = "privateKey must not be null.";
 
         try {
-            ApiSigner.getRSASignature(baseString, null);
+            ApiSigning.getRSASignature(baseString, null);
 
             fail("Expecting ApiUtilException error.");
         } catch (ApiUtilException expected) {
@@ -106,7 +103,7 @@ public class RSASignatureTest {
     @Test
     public void L2_Verify_Signature_Test() {
         try {
-            assertTrue(ApiSigner.verifyRSASignature(message, expectedSignature, publicKey));
+            assertTrue(ApiSigning.verifyRSASignature(message, expectedSignature, publicKey));
         } catch (ApiUtilException e) {
             fail("Should not throw any exception during test execution");
         }
@@ -181,7 +178,7 @@ public class RSASignatureTest {
     public static void L2Test(String baseString, String expectedSignature, String message) {
         String signature = null;
         try {
-            signature = ApiSigner.getRSASignature(baseString, privateKey);
+            signature = ApiSigning.getRSASignature(baseString, privateKey);
         } catch (ApiUtilException e) {
             fail("Should not throw any exception during test execution");
         }

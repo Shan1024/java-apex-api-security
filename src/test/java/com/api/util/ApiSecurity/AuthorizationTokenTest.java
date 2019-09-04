@@ -1,6 +1,4 @@
 package com.api.util.ApiSecurity;
-import com.api.util.ApiSecurity.ApiSigning;
-import com.api.util.ApiSecurity.ApiUtilException;
 import org.junit.Test;
 
 import java.io.File;
@@ -56,7 +54,7 @@ public class AuthorizationTokenTest {
 	{
 		String expectedToken = "Apex_l1_ig realm=\"http://example.api.test/token\", apex_l1_ig_app_id=\"example-4Swyn7qwKeO32EXdH1dKTeIQ\", apex_l1_ig_nonce=\"-5816789581922453013\", apex_l1_ig_signature_method=\"HMACSHA256\", apex_l1_ig_timestamp=\"1502199514462\", apex_l1_ig_version=\"1.0\", apex_l1_ig_signature=\"DoARux+dvq/A2ioQfRybInAQ4Lt4DTAI6DrDJRx7zcs=\"";
 
-		String authorizationToken = ApiSigner.getSignatureToken(
+		String authorizationToken = ApiSigning.getSignatureToken(
             realm
 			, authPrefixL1
 			, httpMethod
@@ -79,7 +77,7 @@ public class AuthorizationTokenTest {
 	public void Test_L2_Basic_Test() throws ApiUtilException
 	{
 		String expectedToken = "Apex_l2_ig realm=\"http://example.api.test/token\", apex_l2_ig_app_id=\"example-4Swyn7qwKeO32EXdH1dKTeIQ\", apex_l2_ig_nonce=\"-5816789581922453013\", apex_l2_ig_signature_method=\"SHA256withRSA\", apex_l2_ig_timestamp=\"1502199514462\", apex_l2_ig_version=\"1.0\", apex_l2_ig_signature=\"Za7B8MaOlGZjc8DTEh9HwhcL+5DiiuTMy+s0bQ8/lajy1Ug64gPCyNEbcYkD/XBEHFyg6vlY9/J85Y+Ui6DeYbXmUFnQjDWdOKf13xJvpsnAQgOqWi+LSc0+gy3pvsQ50nyES3E04vb3RvGwd7UC6SyBhmQ5P8Mz0UUgWBX6L6N3n+xergTg3DKWEPyQih+dqN3DkOmNE8fstAp+HOqiVq2OBxNeg9x5Kp0tq2vka7cC86zdYSNhsQR+D7hC+S1NPninWvdxUF1EwrPrEZYSYXka0Md1XFVjaL6b0htcFo6LxwJ8X6wsOqS4g4qmrAadwm7fITZLxcI0Zdaz7dRw9UFUsGWEVPG8MQztVXleimDxYvorLKTD5bhWGHe+XNwyL+IdR7ErooOHP9pTslJ7yBEmsePTRIAL//h0AEXaBN4pCmBPJnVtYtUWdQsUq/iv/4FLtWvOK77EReAtq3uqndJfGInXUMESqS4PzGDajTZj+oDP7xektLh7umELQBnSKNuv3BR9H63sf+Z9mZQ1531LYEmQWR8p3LCP8E0DcROo0OP1gcE76N9Z1HKLtJjLYDRyQRUQMM2FlJRkb3sy2g60yNThkPprzohBvHowCRFs02tlkyBbOuKC2cV9hwSz8eMqhUTzNn/WMi2Dr2V7iTJtyJHT9kdebVY2Cvnlt5I=\"";
-		String authorizationToken = ApiSigner.getSignatureToken(
+		String authorizationToken = ApiSigning.getSignatureToken(
 			realm
 			, authPrefixL2
 			, httpMethod
@@ -104,7 +102,7 @@ public class AuthorizationTokenTest {
 		String expectedMessage = "keystore password was incorrect";
 		
 		try {
-			ApiSigner.getSignatureToken(
+			ApiSigning.getSignatureToken(
 				realm
 				, authPrefixL2
 				, httpMethod
@@ -134,7 +132,7 @@ public class AuthorizationTokenTest {
 		
 		try {
 
-	        ApiSigner.getSignatureToken(
+	        ApiSigning.getSignatureToken(
 				realm
 				, authPrefixL2
 				, httpMethod
@@ -164,7 +162,7 @@ public class AuthorizationTokenTest {
 		
 		try {
 
-	        ApiSigner.getSignatureToken(
+	        ApiSigning.getSignatureToken(
 				realm
 				, authPrefixL2
 				, httpMethod

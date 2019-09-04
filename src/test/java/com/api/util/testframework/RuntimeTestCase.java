@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.api.util.ApiSecurity.ApiList;
-import com.api.util.ApiSecurity.ApiSigner;
+import com.api.util.ApiSecurity.ApiSigning;
 import com.api.util.ApiSecurity.ApiUtilException;
 import com.api.util.testframework.dto.ExpectedResult;
 import com.api.util.testframework.dto.FormData;
@@ -89,7 +89,7 @@ public class RuntimeTestCase{
 		}
 		
 		try {
-			assertEquals(Boolean.valueOf(expectedResultVerify), ApiSigner.verifyHMACSignature(testDatum.getApiParam().getSignature(), testDatum.getApiParam().getSecret(), testDatum.getMessage()));
+			assertEquals(Boolean.valueOf(expectedResultVerify), ApiSigning.verifyHMACSignature(testDatum.getApiParam().getSignature(), testDatum.getApiParam().getSecret(), testDatum.getMessage()));
 		} catch (ApiUtilException e) {
 			fail("Not Expecting ApiUtilException error.");
 			log.error("Exception :: RuntimeTestCase :: verifyL1Signature :: testName : {} ", testName);
@@ -111,7 +111,7 @@ public class RuntimeTestCase{
 		}
 		
 		try {
-			assertEquals(Boolean.valueOf(expectedResultVerify), ApiSigner.verifyRSASignature(testDatum.getMessage(), testDatum.getApiParam().getSignature(), getPublicKeyLocal("src/main/resources/test-suites/" + testDatum.getPublicCertFileName())));
+			assertEquals(Boolean.valueOf(expectedResultVerify), ApiSigning.verifyRSASignature(testDatum.getMessage(), testDatum.getApiParam().getSignature(), getPublicKeyLocal("src/main/resources/test-suites/" + testDatum.getPublicCertFileName())));
 		} catch (Exception e) {
 			if(testDatum.getErrorTest()){
 				log.error("ErrorTest :: RuntimeTestCase :: verifyL2Signature :: testName : {} ", testName);
@@ -139,7 +139,7 @@ public class RuntimeTestCase{
 		}
 		
 		try {
-			assertEquals(expectedL1Signature, ApiSigner.getHMACSignature(testDatum.getMessage(), testDatum.getApiParam().getSecret()));
+			assertEquals(expectedL1Signature, ApiSigning.getHMACSignature(testDatum.getMessage(), testDatum.getApiParam().getSecret()));
 		} catch (Exception e) {
 			if(testDatum.getErrorTest()){
 				log.error("ErrorTest :: RuntimeTestCase :: getL1Signature :: testName : {} ", testName);
@@ -169,7 +169,7 @@ public class RuntimeTestCase{
 		}
 		
 		try {
-			assertEquals(expectedL2Signature, ApiSigner.getRSASignature(testDatum.getMessage(), getPrivateKeyLocal("src/main/resources/test-suites/" + testDatum.getApiParam().getPrivateCertFileName(),testDatum.getApiParam().getPassphrase(),null)));
+			assertEquals(expectedL2Signature, ApiSigning.getRSASignature(testDatum.getMessage(), getPrivateKeyLocal("src/main/resources/test-suites/" + testDatum.getApiParam().getPrivateCertFileName(),testDatum.getApiParam().getPassphrase(),null)));
 		} catch (Exception e) {
 			if(testDatum.getErrorTest()){
 				log.error("ErrorTest :: RuntimeTestCase :: getL2Signature :: testName : {} ", testName);
@@ -246,7 +246,7 @@ public class RuntimeTestCase{
 		}
         String baseString = null;
 		try {
-			baseString = ApiSigner.getBaseString(
+			baseString = ApiSigning.getBaseString(
 				authPrefix,
 				signatureMethod,
 				testDatum.getApiParam().getAppId(),
@@ -291,7 +291,7 @@ public class RuntimeTestCase{
 				testDatum.getApiParam().setTimestamp("%s");
 			}
 			
-			signatureToken = ApiSigner.getSignatureToken(
+			signatureToken = ApiSigning.getSignatureToken(
 				testDatum.getApiParam().getRealm(),
 				authPrefix,
 				testDatum.getApiParam().getHttpMethod(),
@@ -331,9 +331,9 @@ public class RuntimeTestCase{
     private static PublicKey getPublicKeyLocal(String publicCertificateFileName) throws ApiUtilException, IOException, GeneralSecurityException {
         try {
         	if(null!=publicCertificateFileName && (publicCertificateFileName.contains(".key"))){
-        		return ApiSigner.getPublicKeyPEM(publicCertificateFileName);
+        		return ApiSigning.getPublicKeyPEM(publicCertificateFileName);
         	}else{
-        		return ApiSigner.getPublicKeyFromX509Certificate(publicCertificateFileName);
+        		return ApiSigning.getPublicKeyFromX509Certificate(publicCertificateFileName);
         	}    		
             
         } catch (ApiUtilException e) {
@@ -345,10 +345,10 @@ public class RuntimeTestCase{
         try {
             
             if(null!=privateKeyFileName && (privateKeyFileName.contains(".key")||privateKeyFileName.contains(".pem"))){
-        		return ApiSigner.getPrivateKeyPEM(privateKeyFileName, password);
+        		return ApiSigning.getPrivateKeyPEM(privateKeyFileName, password);
         	}else{
         		//For JKS file
-        		return ApiSigner.getPrivateKeyFromKeyStore(privateKeyFileName, password, alias);
+        		return ApiSigning.getPrivateKeyFromKeyStore(privateKeyFileName, password, alias);
         	} 
         } catch (ApiUtilException e) {
             throw e;
