@@ -49,14 +49,7 @@ public class ApiSigner {
     public static String getHMACSignature(String baseString, String secret) throws ApiUtilException {
         log.debug("Enter :: getHMACSignature :: baseString : {} , secret: {} ", baseString, secret);
 
-        //Initialization
-        String base64Token;
-        SecretKeySpec signingKey;
-        Mac mac;
-        byte[] rawHmac;
-
         try {
-            //Validation
             if (baseString == null || baseString.isEmpty()) {
                 throw new ApiUtilException("baseString must not be null or empty.");
             }
@@ -66,19 +59,20 @@ public class ApiSigner {
             }
 
             // get an hmac_sha256 key from the raw key bytes
-            signingKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HMACSHA256");
+            SecretKeySpec signingKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HMACSHA256");
 
             // get an hmac_sha256 Mac instance and initialize with the signing key
-            mac = Mac.getInstance("HMACSHA256");
-
+            Mac mac = Mac.getInstance("HMACSHA256");
             mac.init(signingKey);
 
             // compute the hmac on input data bytes
-            rawHmac = mac.doFinal(baseString.getBytes(StandardCharsets.UTF_8));
+            byte[] rawHmac = mac.doFinal(baseString.getBytes(StandardCharsets.UTF_8));
 
             // base64-encode the hmac
-            base64Token = Base64.getEncoder().encodeToString(rawHmac);
+            String base64Token = Base64.getEncoder().encodeToString(rawHmac);
+            log.debug("Exit :: getHMACSignature :: base64Token : {} ", base64Token);
 
+            return base64Token;
         } catch (ApiUtilException ae) {
             log.error("Error :: getHMACSignature :: " + ae.getMessage());
             throw ae;
@@ -86,12 +80,7 @@ public class ApiSigner {
             log.error("Error :: getHMACSignature :: " + e.getMessage());
             throw new ApiUtilException("Error during L1 Signature value generation", e);
         }
-
-        log.debug("Exit :: getHMACSignature :: base64Token : {} ", base64Token);
-
-        return base64Token;
     }
-
 
     /**
      * Verify HMACSHA256 Signature (L1)
@@ -125,11 +114,7 @@ public class ApiSigner {
     public static String getRSASignature(String baseString, PrivateKey privateKey) throws ApiUtilException {
         log.debug("Enter :: getRSASignature :: baseString : {} ", baseString);
 
-        Signature rsa;
-        byte[] encryptedData;
-        String base64Token;
         try {
-            //Validation
             if (baseString == null || baseString.isEmpty()) {
                 throw new ApiUtilException("baseString must not be null or empty.");
             }
@@ -138,26 +123,24 @@ public class ApiSigner {
                 throw new ApiUtilException("privateKey must not be null.");
             }
 
-            rsa = Signature.getInstance("SHA256withRSA");
+            Signature rsa = Signature.getInstance("SHA256withRSA");
             rsa.initSign(privateKey);
             rsa.update(baseString.getBytes());
 
-            encryptedData = rsa.sign();
+            byte[] encryptedData = rsa.sign();
             log.debug("encryptedData length:" + encryptedData.length);
 
-            base64Token = new String(Base64.getEncoder().encode(encryptedData));
+            String base64Token = new String(Base64.getEncoder().encode(encryptedData));
+            log.debug("Exit :: getRSASignature :: base64Token : {} ", base64Token);
 
+            return base64Token;
         } catch (ApiUtilException ae) {
             log.error("Error :: getRSASignature :: " + ae.getMessage());
             throw ae;
-
         } catch (Exception e) {
             log.error("Error :: getRSASignature :: " + e.getMessage());
             throw new ApiUtilException("Error during L2 Signature value generation", e);
         }
-
-        log.debug("Exit :: getRSASignature :: base64Token : {} ", base64Token);
-        return base64Token;
     }
 
     /**
@@ -171,25 +154,22 @@ public class ApiSigner {
      */
     public static boolean verifyRSASignature(String baseString, String signature, PublicKey publicKey) throws ApiUtilException {
         log.debug("Enter :: verifyRSASignature :: baseString  : {} , signature : {} ", baseString, signature);
-        Signature publicSignature;
-        boolean verified;
+
         try {
-            publicSignature = Signature.getInstance("SHA256withRSA");
+            Signature publicSignature = Signature.getInstance("SHA256withRSA");
             publicSignature.initVerify(publicKey);
             publicSignature.update(baseString.getBytes(StandardCharsets.UTF_8));
 
             byte[] signatureBytes = Base64.getDecoder().decode(signature);
+            boolean verified = publicSignature.verify(signatureBytes);
 
             log.debug("Exit :: verifyRSASignature");
-            verified = publicSignature.verify(signatureBytes);
+
+            return verified;
         } catch (Exception e) {
             log.error("Error :: verifyRSASignature :: " + e.getMessage());
             throw new ApiUtilException("Error during L2 Signature verification", e);
         }
-
-        log.debug("Exit :: verifyRSASignature");
-
-        return verified;
     }
 
     /**
@@ -204,39 +184,28 @@ public class ApiSigner {
     public static PrivateKey getPrivateKeyFromKeyStore(String keystoreFileName, String password, String alias) throws ApiUtilException {
         log.debug("Enter :: getPrivateKeyFromKeyStore :: keystoreFileName : {} , password: {} , alias: {} ",
                 keystoreFileName, password, alias);
-        //Initialization
-        KeyStore ks;
-        PrivateKey privateKey;
-        java.io.FileInputStream fis = null;
-        KeyStore.PrivateKeyEntry keyEnt;
 
         try {
-
-            ks = KeyStore.getInstance("JKS");
+            KeyStore ks = KeyStore.getInstance("JKS");
 
             // keystore and key password
             char[] passwordChar = password.toCharArray();
 
-            try {
-                fis = new java.io.FileInputStream(keystoreFileName);
-
+            // Try with resources which will auto close the stream.
+            try (FileInputStream fis = new FileInputStream(keystoreFileName)) {
                 ks.load(fis, passwordChar);
-            } finally {
-                if (fis != null) {
-                    fis.close();
-                }
             }
 
-            keyEnt = (KeyStore.PrivateKeyEntry) ks.getEntry(alias, new KeyStore.PasswordProtection(passwordChar));
-            privateKey = keyEnt.getPrivateKey();
+            KeyStore.PrivateKeyEntry keyEnt = (KeyStore.PrivateKeyEntry) ks.getEntry(alias,
+                    new KeyStore.PasswordProtection(passwordChar));
+            PrivateKey privateKey = keyEnt.getPrivateKey();
+            log.debug("Exit :: getPrivateKeyFromKeyStore");
+
+            return privateKey;
         } catch (Exception e) {
             log.error("Error :: getPrivateKeyFromKeyStore :: " + e.getMessage());
             throw new ApiUtilException("Error while getting Private Key from KeyStore", e);
         }
-
-        log.debug("Exit :: getPrivateKeyFromKeyStore");
-
-        return privateKey;
     }
 
     /**
@@ -250,33 +219,17 @@ public class ApiSigner {
         log.debug("Enter :: getPublicKeyFromX509Certificate :: publicCertificateFileName : {} ",
                 publicCertificateFileName);
 
-        //Initialization
-        FileInputStream fin = null;
-        CertificateFactory f;
-        PublicKey pk;
-        try {
-
-            fin = new FileInputStream(publicCertificateFileName);
-
-            f = CertificateFactory.getInstance("X.509");
+        // Try with resources which will auto close the stream.
+        try (FileInputStream fin = new FileInputStream(publicCertificateFileName)) {
+            CertificateFactory f = CertificateFactory.getInstance("X.509");
             X509Certificate certificate = (X509Certificate) f.generateCertificate(fin);
-            pk = certificate.getPublicKey();
-
+            PublicKey pk = certificate.getPublicKey();
+            log.debug("Exit :: getPublicKeyFromX509Certificate");
+            return pk;
         } catch (Exception e) {
             log.error("Error :: getPublicKeyFromX509Certificate :: " + e.getMessage());
             throw new ApiUtilException("Error while getting Public Key from X509 Certificate", e);
-        } finally {
-            if (null != fin) {
-                try {
-                    fin.close();
-                } catch (IOException e) {
-                    throw new ApiUtilException("Error while closing FileInputStream from X509 Certificate", e);
-                }
-            }
         }
-
-        log.debug("Exit :: getPublicKeyFromX509Certificate");
-        return pk;
     }
 
     /**
@@ -288,16 +241,19 @@ public class ApiSigner {
      */
     public static PublicKey getPublicKeyPEM(String publicCertificateFileName) throws IOException {
         log.debug("Enter :: getPublicKeyPEM :: publicCertificateFileName : {} ", publicCertificateFileName);
-        PublicKey key;
-        PEMParser pemParser = null;
+
         Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-        try {
-            File publicCertificateFile = new File(publicCertificateFileName); // private key file in PEM format
-            pemParser = new PEMParser(new FileReader(publicCertificateFile));
+
+        // Private key file in PEM format.
+        File publicCertificateFile = new File(publicCertificateFileName);
+
+        // Try with resources which will auto close the parser.
+        try (PEMParser pemParser = new PEMParser(new FileReader(publicCertificateFile))) {
             Object object = pemParser.readObject();
             JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
-            SubjectPublicKeyInfo keyInfo;
 
+            SubjectPublicKeyInfo keyInfo;
+            PublicKey key;
             KeyPair kp;
             if (object instanceof SubjectPublicKeyInfo) {
                 keyInfo = (SubjectPublicKeyInfo) object;
@@ -306,18 +262,13 @@ public class ApiSigner {
                 kp = converter.getKeyPair(((PEMKeyPair) object));
                 key = kp.getPublic();
             }
+            log.debug("Exit :: getPublicKeyPEM");
 
+            return key;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw e;
-        } finally {
-            if (null != pemParser) {
-                pemParser.close();
-            }
         }
-        log.debug("Exit :: getPublicKeyPEM");
-
-        return key;
     }
 
     /**
@@ -334,19 +285,12 @@ public class ApiSigner {
      * @return Base String for signing
      * @throws ApiUtilException
      */
-    public static String getBaseString(String authPrefix
-            , String signatureMethod
-            , String appId
-            , String urlPath
-            , String httpMethod
-            , ApiList formList
-            , String nonce
-            , String timestamp) throws ApiUtilException {
+    public static String getBaseString(String authPrefix, String signatureMethod, String appId, String urlPath,
+                                       String httpMethod, ApiList formList, String nonce, String timestamp)
+            throws ApiUtilException {
         log.debug("Enter :: getBaseString :: authPrefix  : {} , signatureMethod : {} , appId : {} , "
-                        + "urlPath : {} , httpMethod : {} , nonce : {} , timestamp : {}",
-                authPrefix, signatureMethod, appId, urlPath, httpMethod, nonce, timestamp);
-
-        String baseString;
+                        + "urlPath : {} , httpMethod : {} , nonce : {} , timestamp : {}", authPrefix, signatureMethod,
+                appId, urlPath, httpMethod, nonce, timestamp);
 
         try {
             authPrefix = authPrefix.toLowerCase();
@@ -372,10 +316,10 @@ public class ApiSigner {
 
             log.debug("url:: {}", url);
 
-            // helper calss that handle parameters and form fields
+            // Helper class that handle parameters and form fields.
             ApiList paramList = new ApiList();
 
-            // process QueryString from url by transfering it to paramList
+            // Process QueryString from url by transferring it to paramList.
             if (null != siteUri.getQuery()) {
                 String queryString = siteUri.getRawQuery();
                 log.debug("queryString:: {}", queryString);
@@ -398,7 +342,7 @@ public class ApiSigner {
 
             }
 
-            // add the form fields to paramList
+            // Add the form fields to paramList.
             if (formList != null && formList.size() > 0) {
                 paramList.addAll(formList);
             }
@@ -409,8 +353,10 @@ public class ApiSigner {
             paramList.add(authPrefix + "_signature_method", signatureMethod);
             paramList.add(authPrefix + "_version", "1.0");
 
-            baseString = httpMethod.toUpperCase() + "&" + url + "&" + paramList.toString(true);
+            String baseString = httpMethod.toUpperCase() + "&" + url + "&" + paramList.toString(true);
+            log.debug("Exit :: getBaseString :: baseString : {} ", baseString);
 
+            return baseString;
         } catch (ApiUtilException ae) {
             ae.printStackTrace();
             log.error("Error :: getBaseString :: " + ae.getMessage(), ae);
@@ -420,10 +366,6 @@ public class ApiSigner {
             log.error("Error :: getBaseString :: " + e.getMessage());
             throw new ApiUtilException("Error while getting Base String", e);
         }
-
-        log.debug("Exit :: getBaseString :: baseString : {} ", baseString);
-
-        return baseString;
     }
 
     /**
@@ -444,35 +386,22 @@ public class ApiSigner {
      * @return
      * @throws ApiUtilException
      */
-    public static String getSignatureToken(
-            String realm
-            , String authPrefix
-            , String httpMethod
-            , String urlPath
-            , String appId
-            , String secret
-            , ApiList formList
-            , String password
-            , String alias
-            , String fileName
-            , String nonce
-            , String timestamp) throws ApiUtilException {
+    public static String getSignatureToken(String realm, String authPrefix, String httpMethod, String urlPath,
+                                           String appId, String secret, ApiList formList, String password, String alias,
+                                           String fileName, String nonce, String timestamp) throws ApiUtilException {
         log.debug("Enter :: getToken :: realm : {} , authPrefix  : {} , appId : {} , "
                         + "urlPath : {} , httpMethod : {} , nonce : {} , timestamp : {} , secret : {} , password : {}" +
-                        " , alias : {} , fileName : {}",
-                realm, authPrefix, appId, urlPath, httpMethod, nonce, timestamp, secret, password, alias, fileName);
-
-        String authorizationToken;
-        String signatureMethod;
-        String base64Token = "";
+                        " , alias : {} , fileName : {}", realm, authPrefix, appId, urlPath, httpMethod, nonce,
+                timestamp, secret, password, alias, fileName);
 
         try {
-
             authPrefix = authPrefix.toLowerCase();
 
             // Generate the nonce value
             nonce = (nonce != null && !nonce.isEmpty()) ? nonce : getNewNonce();
             timestamp = timestamp != null ? timestamp : Long.toString(getNewTimestamp());
+
+            String signatureMethod;
 
             if (authPrefix.toLowerCase().contains("l1")) {
                 signatureMethod = "HMACSHA256";
@@ -482,9 +411,10 @@ public class ApiSigner {
                 throw new ApiUtilException("Invalid Authorization Prefix.");
             }
 
-            String baseString = getBaseString(authPrefix, signatureMethod
-                    , appId, urlPath, httpMethod
-                    , formList, nonce, timestamp);
+            String baseString = getBaseString(authPrefix, signatureMethod, appId, urlPath, httpMethod, formList, nonce,
+                    timestamp);
+
+            String base64Token = "";
 
             if ("HMACSHA256".equals(signatureMethod)) {
                 base64Token = getHMACSignature(baseString, secret);
@@ -512,11 +442,12 @@ public class ApiSigner {
             tokenList.add(authPrefix + "_version", "1.0");
             tokenList.add(authPrefix + "_signature", base64Token);
 
-
-            authorizationToken = String.format("%s %s",
+            String authorizationToken = String.format("%s %s",
                     authPrefix.substring(0, 1).toUpperCase() + authPrefix.substring(1), tokenList.toString(", ",
                             false, true, false));
+            log.debug("Exit :: getToken :: authorizationToken : {} ", authorizationToken);
 
+            return authorizationToken;
         } catch (ApiUtilException ae) {
             log.error("Error :: getToken :: " + ae.getMessage());
             throw ae;
@@ -524,10 +455,6 @@ public class ApiSigner {
             log.error("Error :: getToken :: " + e.getMessage());
             throw new ApiUtilException("Error while getting Token", e);
         }
-
-        log.debug("Exit :: getToken :: authorizationToken : {} ", authorizationToken);
-
-        return authorizationToken;
     }
 
     private static long getNewTimestamp() {
@@ -541,14 +468,10 @@ public class ApiSigner {
      * @throws NoSuchAlgorithmException
      */
     private static String getNewNonce() throws NoSuchAlgorithmException {
-        String nonce = null;
         byte[] b = new byte[32];
         SecureRandom.getInstance("SHA1PRNG").nextBytes(b);
-        nonce = Base64.getEncoder().encodeToString(b);
-
-        return nonce;
+        return Base64.getEncoder().encodeToString(b);
     }
-
 
     /**
      * Get Private Key from PEM format file
@@ -560,12 +483,14 @@ public class ApiSigner {
      */
     public static PrivateKey getPrivateKeyPEM(String privateKeyFileName, String password) throws IOException {
         log.debug("Enter :: getPrivateKeyPEM :: privateKeyFileName : {} ", privateKeyFileName);
-        PrivateKey key = null;
-        PEMParser pemParser = null;
+
         Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-        try {
-            File privateKeyFile = new File(privateKeyFileName); // private key file in PEM format
-            pemParser = new PEMParser(new FileReader(privateKeyFile));
+
+        // Private key file in PEM format.
+        File privateKeyFile = new File(privateKeyFileName);
+
+        // Try with resources which will auto close the parser.
+        try (PEMParser pemParser = new PEMParser(new FileReader(privateKeyFile))) {
             Object object = pemParser.readObject();
             PEMDecryptorProvider decProv = new JcePEMDecryptorProviderBuilder().build(password.toCharArray());
             JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
@@ -575,16 +500,10 @@ public class ApiSigner {
             } else {
                 kp = converter.getKeyPair(((PEMKeyPair) object));
             }
-            key = kp.getPrivate();
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (null != pemParser) {
-                pemParser.close();
-            }
-        }
-        log.debug("Exit :: getPrivateKeyPEM");
+            PrivateKey key = kp.getPrivate();
+            log.debug("Exit :: getPrivateKeyPEM");
 
-        return key;
+            return key;
+        }
     }
 }
