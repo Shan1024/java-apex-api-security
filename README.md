@@ -192,7 +192,7 @@ formData.add("param1", "data1");
 formData.addAll(queryParam);
 
 try {
-    String signature = ApiSigning.getSignatureToken(authPrefix, authPrefix, httpMethod, signingUrl, appId, secret, formData, password, alias, certFileName, nonce, timestamp);
+    String signature = ApiSigner.getSignatureToken(authPrefix, authPrefix, httpMethod, signingUrl, appId, secret, formData, password, alias, certFileName, nonce, timestamp);
 } catch (ApiUtilException e) {
     e.printStackTrace();
 }
@@ -227,7 +227,7 @@ formData.add("param1", "data1");
 String baseString;
 
 try {
-baseString = ApiSigning.getBaseString(
+baseString = ApiSigner.getBaseString(
     "<<authPrefix>>",
     "HMACSHA256",
     "<<appId>>",
@@ -261,7 +261,7 @@ String secret = "<<appSecret>>";
 String L1Sig;
 		
 try {
-    L1Sig = ApiSigning.getHMACSignature(baseString, secret);
+    L1Sig = ApiSigner.getHMACSignature(baseString, secret);
     System.out.println(L1Sig);
 
 } catch (ApiUtilException e) {
@@ -288,14 +288,14 @@ String publicCertFileName = "certificates/ssc.alpha.example.com.cer";
 
 try {
     
-    PrivateKey privateKey = ApiSigning.getPrivateKeyFromKeyStore(keyStoreFileName, password, alias);
+    PrivateKey privateKey = ApiSigner.getPrivateKeyFromKeyStore(keyStoreFileName, password, alias);
     
-    String signature = ApiSigning.getRSASignature(baseString, privateKey);
+    String signature = ApiSigner.getRSASignature(baseString, privateKey);
 
     System.out.println(expectedSignature);
     System.out.println(signature);
     
-    PublicKey publicKey = ApiSigning.getPublicKeyFromX509Certificate(publicCertFileName);
+    PublicKey publicKey = ApiSigner.getPublicKeyFromX509Certificate(publicCertFileName);
     
 } catch (ApexUtilLibException e) {
     e.printStackTrace();
@@ -321,7 +321,7 @@ public void Http_Call_Test() throws ApiUtilException, IOException
 	formData.add("key1", "value1");
 	formData.add("key2","value2");
 	
-	String authorizationToken = ApiSigning.getSignatureToken(
+	String authorizationToken = ApiSigner.getSignatureToken(
         realm
 		, authPrefixL1
 		, httpMethod

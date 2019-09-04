@@ -32,9 +32,9 @@ import java.util.Base64;
 /**
  * @author GDS-PDD
  */
-public class ApiSigning {
+public class ApiSigner {
 
-    private static final Logger log = LoggerFactory.getLogger(ApiSigning.class);
+    private static final Logger log = LoggerFactory.getLogger(ApiSigner.class);
 
     /**
      * Create HMACRSA256 Signature (L1) with a given basestring
@@ -586,10 +586,10 @@ public class ApiSigning {
             } else if("SHA256withRSA".equals(signatureMethod)){
             	PrivateKey privateKey = null;
             	if(null!=fileName && (fileName.contains(".key")||fileName.contains(".pem"))){
-            		privateKey = ApiSigning.getPrivateKeyPEM(fileName, password);
+            		privateKey = ApiSigner.getPrivateKeyPEM(fileName, password);
             	}else{
             		//For JKS file
-            		privateKey = ApiSigning.getPrivateKeyFromKeyStore(fileName, password, alias);
+            		privateKey = ApiSigner.getPrivateKeyFromKeyStore(fileName, password, alias);
             	}
             			
                 //PrivateKey privateKey = getPrivateKeyFromKeyStore(fileName, password, alias);
