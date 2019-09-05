@@ -1,8 +1,9 @@
 package com.api.util.testframework;
 
 
-import java.lang.reflect.Method;
 import org.junit.runners.model.FrameworkMethod;
+
+import java.lang.reflect.Method;
 /**
 * Represents a method on a test class to be invoked at the appropriate point in test
 * execution. These methods are usually marked with an annotation (such as @Test, @Before,

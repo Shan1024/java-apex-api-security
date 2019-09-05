@@ -1,8 +1,6 @@
 
 package com.api.util.testframework.dto;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,12 +10,13 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * The Expectedresult Schema
  * <p>
- * 
- * 
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -26,7 +25,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class ExpectedResult {
 
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
@@ -53,7 +52,7 @@ public class ExpectedResult {
         if (other == this) {
             return true;
         }
-        if ((other instanceof ExpectedResult) == false) {
+        if (!(other instanceof ExpectedResult)) {
             return false;
         }
         ExpectedResult rhs = ((ExpectedResult) other);

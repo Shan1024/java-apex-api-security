@@ -1,10 +1,6 @@
 
 package com.api.util.testframework.dto;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,114 +11,106 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * The Items Schema
  * <p>
- * 
- * 
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id",
-    "description",
-    "apiName",
-    "apiParam",
-    "expectedResult",
-    "message",
-    "publicCertFileName",
-    "skipTest",
-    "passphrase",
-    "errorTest"
+        "id",
+        "description",
+        "apiName",
+        "apiParam",
+        "expectedResult",
+        "message",
+        "publicCertFileName",
+        "skipTest",
+        "passphrase",
+        "errorTest"
 })
 public class TestDatum {
 
     /**
      * The Id Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("id")
     private String id = "";
     /**
      * The Description Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("description")
     private String description = "";
     /**
      * The Apiname Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("apiName")
     private String apiName = "";
     /**
      * The Apiparam Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("apiParam")
     private ApiParam apiParam;
     /**
      * The Expectedresult Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("expectedResult")
     private ExpectedResult expectedResult;
     /**
      * The Message Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("message")
     private String message = "";
     /**
      * The PublicCertFileName Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("publicCertFileName")
     private String publicCertFileName = "";
     /**
      * The SkipTest Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("skipTest")
     private List<Object> skipTest = new ArrayList<Object>();
     /**
      * The Passphrase Schema
      * <p>
-     * 
-     * 
      */
     @JsonProperty("passphrase")
     private String passphrase = "";
     /**
      * The ErrorTest Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("errorTest")
     private Boolean errorTest;
@@ -132,9 +120,8 @@ public class TestDatum {
     /**
      * The Id Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("id")
     public String getId() {
@@ -144,9 +131,8 @@ public class TestDatum {
     /**
      * The Id Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("id")
     public void setId(String id) {
@@ -156,9 +142,8 @@ public class TestDatum {
     /**
      * The Description Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("description")
     public String getDescription() {
@@ -168,9 +153,8 @@ public class TestDatum {
     /**
      * The Description Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("description")
     public void setDescription(String description) {
@@ -180,9 +164,8 @@ public class TestDatum {
     /**
      * The Apiname Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("apiName")
     public String getApiName() {
@@ -192,9 +175,8 @@ public class TestDatum {
     /**
      * The Apiname Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("apiName")
     public void setApiName(String apiName) {
@@ -204,9 +186,8 @@ public class TestDatum {
     /**
      * The Apiparam Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("apiParam")
     public ApiParam getApiParam() {
@@ -216,9 +197,8 @@ public class TestDatum {
     /**
      * The Apiparam Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("apiParam")
     public void setApiParam(ApiParam apiParam) {
@@ -228,9 +208,8 @@ public class TestDatum {
     /**
      * The Expectedresult Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("expectedResult")
     public ExpectedResult getExpectedResult() {
@@ -240,9 +219,8 @@ public class TestDatum {
     /**
      * The Expectedresult Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("expectedResult")
     public void setExpectedResult(ExpectedResult expectedResult) {
@@ -252,9 +230,8 @@ public class TestDatum {
     /**
      * The Message Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("message")
     public String getMessage() {
@@ -264,9 +241,8 @@ public class TestDatum {
     /**
      * The Message Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("message")
     public void setMessage(String message) {
@@ -276,9 +252,8 @@ public class TestDatum {
     /**
      * The PublicCertFileName Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("publicCertFileName")
     public String getPublicCertFileName() {
@@ -288,9 +263,8 @@ public class TestDatum {
     /**
      * The PublicCertFileName Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("publicCertFileName")
     public void setPublicCertFileName(String publicCertFileName) {
@@ -300,9 +274,8 @@ public class TestDatum {
     /**
      * The SkipTest Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("skipTest")
     public List<Object> getSkipTest() {
@@ -312,9 +285,8 @@ public class TestDatum {
     /**
      * The SkipTest Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("skipTest")
     public void setSkipTest(List<Object> skipTest) {
@@ -324,8 +296,6 @@ public class TestDatum {
     /**
      * The Passphrase Schema
      * <p>
-     * 
-     * 
      */
     @JsonProperty("passphrase")
     public String getPassphrase() {
@@ -335,8 +305,6 @@ public class TestDatum {
     /**
      * The Passphrase Schema
      * <p>
-     * 
-     * 
      */
     @JsonProperty("passphrase")
     public void setPassphrase(String passphrase) {
@@ -346,9 +314,8 @@ public class TestDatum {
     /**
      * The ErrorTest Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("errorTest")
     public Boolean getErrorTest() {
@@ -358,9 +325,8 @@ public class TestDatum {
     /**
      * The ErrorTest Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("errorTest")
     public void setErrorTest(Boolean errorTest) {
@@ -379,7 +345,11 @@ public class TestDatum {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("id", id).append("description", description).append("apiName", apiName).append("apiParam", apiParam).append("expectedResult", expectedResult).append("message", message).append("publicCertFileName", publicCertFileName).append("skipTest", skipTest).append("passphrase", passphrase).append("errorTest", errorTest).append("additionalProperties", additionalProperties).toString();
+        return new ToStringBuilder(this).append("id", id).append("description", description).append("apiName",
+                apiName).append("apiParam", apiParam).append("expectedResult", expectedResult).append("message",
+                message).append("publicCertFileName", publicCertFileName).append("skipTest", skipTest).append(
+                        "passphrase", passphrase).append("errorTest", errorTest).append("additionalProperties",
+                additionalProperties).toString();
     }
 
     @Override
@@ -392,7 +362,7 @@ public class TestDatum {
         if (other == this) {
             return true;
         }
-        if ((other instanceof TestDatum) == false) {
+        if (!(other instanceof TestDatum)) {
             return false;
         }
         TestDatum rhs = ((TestDatum) other);

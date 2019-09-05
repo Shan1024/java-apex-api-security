@@ -1,9 +1,6 @@
 
 package com.api.util.testframework.dto;
 
-import java.util.ArrayList;
-import java.util.Map.Entry;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,19 +9,18 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
+import java.util.Map.Entry;
 
 
 /**
  * The Formdata Schema
  * <p>
- * 
- * 
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-
-})
+@JsonPropertyOrder
 public class FormData {
 
     @JsonIgnore
@@ -37,7 +33,7 @@ public class FormData {
 
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
-    	Entry<String, Object> e = new SimpleEntry<String,Object>(name,value);
+        Entry<String, Object> e = new SimpleEntry<String, Object>(name, value);
         this.additionalProperties.add(e);
     }
 
@@ -56,7 +52,7 @@ public class FormData {
         if (other == this) {
             return true;
         }
-        if ((other instanceof FormData) == false) {
+        if (!(other instanceof FormData)) {
             return false;
         }
         FormData rhs = ((FormData) other);

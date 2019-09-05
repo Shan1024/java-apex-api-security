@@ -1,8 +1,6 @@
 
 package com.api.util.testframework.dto;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,155 +11,142 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * The Apiparam Schema
  * <p>
- * 
- * 
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "realm",
-    "authPrefix",
-    "appId",
-    "invokeUrl",
-    "signatureUrl",
-    "httpMethod",
-    "queryString",
-    "formData",
-    "privateCertFileName",
-    "nonce",
-    "timestamp",
-    "secret",
-    "signature",
-    "passphrase"
+        "realm",
+        "authPrefix",
+        "appId",
+        "invokeUrl",
+        "signatureUrl",
+        "httpMethod",
+        "queryString",
+        "formData",
+        "privateCertFileName",
+        "nonce",
+        "timestamp",
+        "secret",
+        "signature",
+        "passphrase"
 })
 public class ApiParam {
 
     /**
      * The Realm Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("realm")
     private String realm = "";
     /**
      * The Authprefix Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("authPrefix")
     private String authPrefix = "";
     /**
      * The Appid Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("appId")
     private String appId = "";
     /**
      * The Invokeurl Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("invokeUrl")
     private String invokeUrl = "";
     /**
      * The Signatureurl Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("signatureUrl")
     private String signatureUrl = "";
     /**
      * The Httpmethod Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("httpMethod")
     private String httpMethod = "";
     /**
      * The Querystring Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("queryString")
     private QueryString queryString;
     /**
      * The Formdata Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("formData")
     private FormData formData;
     /**
      * The Privatecertfilename Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("privateCertFileName")
     private String privateCertFileName = "";
     /**
      * The Nonce Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("nonce")
     private String nonce = "";
     /**
      * The Timestamp Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("timestamp")
     private String timestamp = "";
     /**
      * The Secret Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("secret")
     private String secret = "";
     /**
      * The Signature Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("signature")
     private String signature = "";
     /**
      * The Passphrase Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("passphrase")
     private String passphrase = "";
@@ -171,9 +156,8 @@ public class ApiParam {
     /**
      * The Realm Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("realm")
     public String getRealm() {
@@ -183,9 +167,8 @@ public class ApiParam {
     /**
      * The Realm Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("realm")
     public void setRealm(String realm) {
@@ -195,9 +178,8 @@ public class ApiParam {
     /**
      * The Authprefix Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("authPrefix")
     public String getAuthPrefix() {
@@ -207,9 +189,8 @@ public class ApiParam {
     /**
      * The Authprefix Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("authPrefix")
     public void setAuthPrefix(String authPrefix) {
@@ -219,9 +200,8 @@ public class ApiParam {
     /**
      * The Appid Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("appId")
     public String getAppId() {
@@ -231,9 +211,8 @@ public class ApiParam {
     /**
      * The Appid Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("appId")
     public void setAppId(String appId) {
@@ -243,9 +222,8 @@ public class ApiParam {
     /**
      * The Invokeurl Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("invokeUrl")
     public String getInvokeUrl() {
@@ -255,9 +233,8 @@ public class ApiParam {
     /**
      * The Invokeurl Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("invokeUrl")
     public void setInvokeUrl(String invokeUrl) {
@@ -267,9 +244,8 @@ public class ApiParam {
     /**
      * The Signatureurl Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("signatureUrl")
     public String getSignatureUrl() {
@@ -279,9 +255,8 @@ public class ApiParam {
     /**
      * The Signatureurl Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("signatureUrl")
     public void setSignatureUrl(String signatureUrl) {
@@ -291,9 +266,8 @@ public class ApiParam {
     /**
      * The Httpmethod Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("httpMethod")
     public String getHttpMethod() {
@@ -303,9 +277,8 @@ public class ApiParam {
     /**
      * The Httpmethod Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("httpMethod")
     public void setHttpMethod(String httpMethod) {
@@ -315,9 +288,8 @@ public class ApiParam {
     /**
      * The Querystring Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("queryString")
     public QueryString getQueryString() {
@@ -327,9 +299,8 @@ public class ApiParam {
     /**
      * The Querystring Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("queryString")
     public void setQueryString(QueryString queryString) {
@@ -339,9 +310,8 @@ public class ApiParam {
     /**
      * The Formdata Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("formData")
     public FormData getFormData() {
@@ -351,9 +321,8 @@ public class ApiParam {
     /**
      * The Formdata Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("formData")
     public void setFormData(FormData formData) {
@@ -363,9 +332,8 @@ public class ApiParam {
     /**
      * The Privatecertfilename Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("privateCertFileName")
     public String getPrivateCertFileName() {
@@ -375,9 +343,8 @@ public class ApiParam {
     /**
      * The Privatecertfilename Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("privateCertFileName")
     public void setPrivateCertFileName(String privateCertFileName) {
@@ -387,9 +354,8 @@ public class ApiParam {
     /**
      * The Nonce Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("nonce")
     public String getNonce() {
@@ -399,9 +365,8 @@ public class ApiParam {
     /**
      * The Nonce Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("nonce")
     public void setNonce(String nonce) {
@@ -411,9 +376,8 @@ public class ApiParam {
     /**
      * The Timestamp Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("timestamp")
     public String getTimestamp() {
@@ -423,9 +387,8 @@ public class ApiParam {
     /**
      * The Timestamp Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("timestamp")
     public void setTimestamp(String timestamp) {
@@ -435,9 +398,8 @@ public class ApiParam {
     /**
      * The Secret Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("secret")
     public String getSecret() {
@@ -447,9 +409,8 @@ public class ApiParam {
     /**
      * The Secret Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("secret")
     public void setSecret(String secret) {
@@ -459,9 +420,8 @@ public class ApiParam {
     /**
      * The Signature Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("signature")
     public String getSignature() {
@@ -471,9 +431,8 @@ public class ApiParam {
     /**
      * The Signature Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("signature")
     public void setSignature(String signature) {
@@ -483,9 +442,8 @@ public class ApiParam {
     /**
      * The Passphrase Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("passphrase")
     public String getPassphrase() {
@@ -495,9 +453,8 @@ public class ApiParam {
     /**
      * The Passphrase Schema
      * <p>
-     * 
+     * <p>
      * (Required)
-     * 
      */
     @JsonProperty("passphrase")
     public void setPassphrase(String passphrase) {
@@ -516,12 +473,20 @@ public class ApiParam {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("realm", realm).append("authPrefix", authPrefix).append("appId", appId).append("invokeUrl", invokeUrl).append("signatureUrl", signatureUrl).append("httpMethod", httpMethod).append("queryString", queryString).append("formData", formData).append("privateCertFileName", privateCertFileName).append("nonce", nonce).append("timestamp", timestamp).append("secret", secret).append("signature", signature).append("passphrase", passphrase).append("additionalProperties", additionalProperties).toString();
+        return new ToStringBuilder(this).append("realm", realm).append("authPrefix", authPrefix).append("appId",
+                appId).append("invokeUrl", invokeUrl).append("signatureUrl", signatureUrl).append("httpMethod",
+                httpMethod).append("queryString", queryString).append("formData", formData).append(
+                "privateCertFileName", privateCertFileName).append("nonce", nonce).append("timestamp",
+                timestamp).append("secret", secret).append("signature", signature)
+                .append("passphrase", passphrase).append("additionalProperties", additionalProperties).toString();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(privateCertFileName).append(signature).append(signatureUrl).append(secret).append(httpMethod).append(queryString).append(nonce).append(appId).append(invokeUrl).append(realm).append(formData).append(passphrase).append(additionalProperties).append(authPrefix).append(timestamp).toHashCode();
+        return new HashCodeBuilder().append(privateCertFileName).append(signature).append(signatureUrl).append(secret)
+                .append(httpMethod).append(queryString).append(nonce).append(appId).append(invokeUrl).append(realm)
+                .append(formData).append(passphrase).append(additionalProperties).append(authPrefix).append(timestamp)
+                .toHashCode();
     }
 
     @Override
@@ -529,11 +494,16 @@ public class ApiParam {
         if (other == this) {
             return true;
         }
-        if ((other instanceof ApiParam) == false) {
+        if (!(other instanceof ApiParam)) {
             return false;
         }
         ApiParam rhs = ((ApiParam) other);
-        return new EqualsBuilder().append(privateCertFileName, rhs.privateCertFileName).append(signature, rhs.signature).append(signatureUrl, rhs.signatureUrl).append(secret, rhs.secret).append(httpMethod, rhs.httpMethod).append(queryString, rhs.queryString).append(nonce, rhs.nonce).append(appId, rhs.appId).append(invokeUrl, rhs.invokeUrl).append(realm, rhs.realm).append(formData, rhs.formData).append(passphrase, rhs.passphrase).append(additionalProperties, rhs.additionalProperties).append(authPrefix, rhs.authPrefix).append(timestamp, rhs.timestamp).isEquals();
+        return new EqualsBuilder().append(privateCertFileName, rhs.privateCertFileName)
+                .append(signature, rhs.signature).append(signatureUrl, rhs.signatureUrl).append(secret, rhs.secret)
+                .append(httpMethod, rhs.httpMethod).append(queryString, rhs.queryString).append(nonce, rhs.nonce)
+                .append(appId, rhs.appId).append(invokeUrl, rhs.invokeUrl).append(realm, rhs.realm)
+                .append(formData, rhs.formData).append(passphrase, rhs.passphrase)
+                .append(additionalProperties, rhs.additionalProperties).append(authPrefix, rhs.authPrefix)
+                .append(timestamp, rhs.timestamp).isEquals();
     }
-
 }
